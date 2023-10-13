@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked/stacked_annotations.dart';
 
 import 'mail_details_view.desktop.dart';
-import 'mail_details_view.tablet.dart';
 import 'mail_details_view.mobile.dart';
+import 'mail_details_view.tablet.dart';
 import 'mail_details_viewmodel.dart';
 
 class MailDetailsView extends StackedView<MailDetailsViewModel> {
-  const MailDetailsView({super.key});
+  const MailDetailsView(@pathParam this.mailId, {super.key});
+  final String mailId;
 
   @override
   Widget builder(
@@ -24,8 +26,6 @@ class MailDetailsView extends StackedView<MailDetailsViewModel> {
   }
 
   @override
-  MailDetailsViewModel viewModelBuilder(
-    BuildContext context,
-  ) =>
-      MailDetailsViewModel();
+  MailDetailsViewModel viewModelBuilder(BuildContext context) =>
+      MailDetailsViewModel(mailId: mailId);
 }
