@@ -6,4 +6,13 @@ class MailDetailsViewModel extends BaseViewModel {
   String mailId;
 
   Mail get mail => demoMailData.firstWhere((m) => m.id == mailId);
+
+  String get counterLabel => 'Increase counter response: $_counter';
+
+  int _counter = 0;
+
+  void incrementCounter() {
+    _counter++;
+    rebuildUi();
+  }
 }
