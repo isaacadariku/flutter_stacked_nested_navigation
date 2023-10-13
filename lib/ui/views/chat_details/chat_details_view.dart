@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked/stacked_annotations.dart';
 
 import 'chat_details_view.desktop.dart';
-import 'chat_details_view.tablet.dart';
 import 'chat_details_view.mobile.dart';
+import 'chat_details_view.tablet.dart';
 import 'chat_details_viewmodel.dart';
 
 class ChatDetailsView extends StackedView<ChatDetailsViewModel> {
-  const ChatDetailsView({super.key});
+  const ChatDetailsView(@pathParam this.chatId, {super.key});
+  final String chatId;
 
   @override
   Widget builder(
@@ -24,8 +26,6 @@ class ChatDetailsView extends StackedView<ChatDetailsViewModel> {
   }
 
   @override
-  ChatDetailsViewModel viewModelBuilder(
-    BuildContext context,
-  ) =>
-      ChatDetailsViewModel();
+  ChatDetailsViewModel viewModelBuilder(BuildContext context) =>
+      ChatDetailsViewModel(chatId: chatId);
 }
