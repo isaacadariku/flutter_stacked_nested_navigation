@@ -18,9 +18,11 @@ import 'package:stacked_services/stacked_services.dart';
     CustomRoute(page: StartupView, initial: true),
     CustomRoute(
       page: MainView,
+      path: '/dashboard',
       children: [
         CustomRoute(
           page: MailNavigation,
+          path: 'inbox',
           children: [
             CustomRoute(
               page: MailView,
@@ -29,12 +31,14 @@ import 'package:stacked_services/stacked_services.dart';
             ),
             CustomRoute(
               page: MailDetailsView,
+              path: ':mailId',
               transitionsBuilder: TransitionsBuilders.fadeIn,
             ),
           ],
         ),
         CustomRoute(
           page: ChatNavigation,
+          path: 'chat',
           children: [
             CustomRoute(
               page: ChatView,
@@ -43,6 +47,7 @@ import 'package:stacked_services/stacked_services.dart';
             ),
             CustomRoute(
               page: ChatDetailsView,
+              path: ':chatId',
               transitionsBuilder: TransitionsBuilders.fadeIn,
             ),
           ],
