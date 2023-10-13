@@ -24,7 +24,13 @@ class MainViewMobile extends ViewModelWidget<MainViewModel> {
         },
         child: NavigationBar(
           selectedIndex: tabsRouter.activeIndex,
-          onDestinationSelected: tabsRouter.setActiveIndex,
+          onDestinationSelected: (index) {
+            if (tabsRouter.activeIndex == index) {
+              tabsRouter.stackRouterOfIndex(index)?.popUntilRoot();
+            } else {
+              tabsRouter.setActiveIndex(index);
+            }
+          },
           destinations: [
             NavigationDestination(
               icon: Icon(

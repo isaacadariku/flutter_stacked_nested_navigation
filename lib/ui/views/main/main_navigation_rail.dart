@@ -19,7 +19,13 @@ class StackedScaffoldWithNavigationRail extends StatelessWidget {
             NavigationRail(
               selectedIndex: tabsRouter.activeIndex,
               minExtendedWidth: 150,
-              onDestinationSelected: tabsRouter.setActiveIndex,
+              onDestinationSelected: (index) {
+                if (tabsRouter.activeIndex == index) {
+                  tabsRouter.stackRouterOfIndex(index)?.popUntilRoot();
+                } else {
+                  tabsRouter.setActiveIndex(index);
+                }
+              },
               labelType: NavigationRailLabelType.all,
               destinations: [
                 NavigationRailDestination(
