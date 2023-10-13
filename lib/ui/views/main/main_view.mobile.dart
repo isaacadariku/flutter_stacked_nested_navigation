@@ -14,27 +14,36 @@ class MainViewMobile extends ViewModelWidget<MainViewModel> {
         MailNavigationRoute(),
         ChatNavigationRoute(),
       ],
-      bottomNavigationBuilder: (_, tabsRouter) => NavigationBar(
-        selectedIndex: tabsRouter.activeIndex,
-        onDestinationSelected: tabsRouter.setActiveIndex,
-        destinations: [
-          NavigationDestination(
-            icon: Icon(
-              tabsRouter.activeIndex == 0 //
-                  ? Icons.mail //
-                  : Icons.mail_outlined,
+      bottomNavigationBuilder: (_, tabsRouter) => WillPopScope(
+        onWillPop: () async {
+          if (tabsRouter.activeIndex != 0) {
+            tabsRouter.setActiveIndex(0);
+            return false;
+          }
+          return true;
+        },
+        child: NavigationBar(
+          selectedIndex: tabsRouter.activeIndex,
+          onDestinationSelected: tabsRouter.setActiveIndex,
+          destinations: [
+            NavigationDestination(
+              icon: Icon(
+                tabsRouter.activeIndex == 0 //
+                    ? Icons.mail //
+                    : Icons.mail_outlined,
+              ),
+              label: 'Mail',
             ),
-            label: 'Mail',
-          ),
-          NavigationDestination(
-            icon: Icon(
-              tabsRouter.activeIndex == 1
-                  ? Icons.chat_bubble_rounded
-                  : Icons.chat_bubble_outline_rounded,
+            NavigationDestination(
+              icon: Icon(
+                tabsRouter.activeIndex == 1
+                    ? Icons.chat_bubble_rounded
+                    : Icons.chat_bubble_outline_rounded,
+              ),
+              label: 'Chat',
             ),
-            label: 'Chat',
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
