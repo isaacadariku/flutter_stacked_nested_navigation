@@ -8,6 +8,6 @@ class ChatViewModel extends BaseViewModel {
   final routerService = locator<RouterService>();
 
   void navigateToChatDetails(Chat chat) {
-    routerService.navigateTo(const ChatDetailsViewRoute());
+    routerService.navigateTo(ChatDetailsViewRoute(chatId: chat.id));
   }
 }

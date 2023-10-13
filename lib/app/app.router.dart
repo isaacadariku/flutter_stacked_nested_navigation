@@ -77,9 +77,16 @@ class StackedRouterWeb extends _i10.RootStackRouter {
       );
     },
     MailDetailsViewRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<MailDetailsViewArgs>(
+          orElse: () =>
+              MailDetailsViewArgs(mailId: pathParams.getString('mailId')));
       return _i10.CustomPage<dynamic>(
         routeData: routeData,
-        child: const _i6.MailDetailsView(),
+        child: _i6.MailDetailsView(
+          args.mailId,
+          key: args.key,
+        ),
         transitionsBuilder: _i10.TransitionsBuilders.fadeIn,
         opaque: true,
         barrierDismissible: false,
@@ -95,9 +102,16 @@ class StackedRouterWeb extends _i10.RootStackRouter {
       );
     },
     ChatDetailsViewRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<ChatDetailsViewArgs>(
+          orElse: () =>
+              ChatDetailsViewArgs(chatId: pathParams.getString('chatId')));
       return _i10.CustomPage<dynamic>(
         routeData: routeData,
-        child: const _i8.ChatDetailsView(),
+        child: _i8.ChatDetailsView(
+          args.chatId,
+          key: args.key,
+        ),
         transitionsBuilder: _i10.TransitionsBuilders.fadeIn,
         opaque: true,
         barrierDismissible: false,
@@ -113,11 +127,11 @@ class StackedRouterWeb extends _i10.RootStackRouter {
         ),
         _i10.RouteConfig(
           MainViewRoute.name,
-          path: '/main-view',
+          path: '/dashboard',
           children: [
             _i10.RouteConfig(
               MailNavigationRoute.name,
-              path: 'mail-navigation',
+              path: 'inbox',
               parent: MainViewRoute.name,
               children: [
                 _i10.RouteConfig(
@@ -127,14 +141,14 @@ class StackedRouterWeb extends _i10.RootStackRouter {
                 ),
                 _i10.RouteConfig(
                   MailDetailsViewRoute.name,
-                  path: 'mail-details-view',
+                  path: ':mailId',
                   parent: MailNavigationRoute.name,
                 ),
               ],
             ),
             _i10.RouteConfig(
               ChatNavigationRoute.name,
-              path: 'chat-navigation',
+              path: 'chat',
               parent: MainViewRoute.name,
               children: [
                 _i10.RouteConfig(
@@ -144,7 +158,7 @@ class StackedRouterWeb extends _i10.RootStackRouter {
                 ),
                 _i10.RouteConfig(
                   ChatDetailsViewRoute.name,
-                  path: 'chat-details-view',
+                  path: ':chatId',
                   parent: ChatNavigationRoute.name,
                 ),
               ],
@@ -182,7 +196,7 @@ class MainViewRoute extends _i10.PageRouteInfo<void> {
   const MainViewRoute({List<_i10.PageRouteInfo>? children})
       : super(
           MainViewRoute.name,
-          path: '/main-view',
+          path: '/dashboard',
           initialChildren: children,
         );
 
@@ -207,7 +221,7 @@ class MailNavigationRoute extends _i10.PageRouteInfo<void> {
   const MailNavigationRoute({List<_i10.PageRouteInfo>? children})
       : super(
           MailNavigationRoute.name,
-          path: 'mail-navigation',
+          path: 'inbox',
           initialChildren: children,
         );
 
@@ -220,7 +234,7 @@ class ChatNavigationRoute extends _i10.PageRouteInfo<void> {
   const ChatNavigationRoute({List<_i10.PageRouteInfo>? children})
       : super(
           ChatNavigationRoute.name,
-          path: 'chat-navigation',
+          path: 'chat',
           initialChildren: children,
         );
 
@@ -241,14 +255,37 @@ class MailViewRoute extends _i10.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i6.MailDetailsView]
-class MailDetailsViewRoute extends _i10.PageRouteInfo<void> {
-  const MailDetailsViewRoute()
-      : super(
+class MailDetailsViewRoute extends _i10.PageRouteInfo<MailDetailsViewArgs> {
+  MailDetailsViewRoute({
+    required String mailId,
+    _i11.Key? key,
+  }) : super(
           MailDetailsViewRoute.name,
-          path: 'mail-details-view',
+          path: ':mailId',
+          args: MailDetailsViewArgs(
+            mailId: mailId,
+            key: key,
+          ),
+          rawPathParams: {'mailId': mailId},
         );
 
   static const String name = 'MailDetailsView';
+}
+
+class MailDetailsViewArgs {
+  const MailDetailsViewArgs({
+    required this.mailId,
+    this.key,
+  });
+
+  final String mailId;
+
+  final _i11.Key? key;
+
+  @override
+  String toString() {
+    return 'MailDetailsViewArgs{mailId: $mailId, key: $key}';
+  }
 }
 
 /// generated route for
@@ -265,14 +302,37 @@ class ChatViewRoute extends _i10.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i8.ChatDetailsView]
-class ChatDetailsViewRoute extends _i10.PageRouteInfo<void> {
-  const ChatDetailsViewRoute()
-      : super(
+class ChatDetailsViewRoute extends _i10.PageRouteInfo<ChatDetailsViewArgs> {
+  ChatDetailsViewRoute({
+    required String chatId,
+    _i11.Key? key,
+  }) : super(
           ChatDetailsViewRoute.name,
-          path: 'chat-details-view',
+          path: ':chatId',
+          args: ChatDetailsViewArgs(
+            chatId: chatId,
+            key: key,
+          ),
+          rawPathParams: {'chatId': chatId},
         );
 
   static const String name = 'ChatDetailsView';
+}
+
+class ChatDetailsViewArgs {
+  const ChatDetailsViewArgs({
+    required this.chatId,
+    this.key,
+  });
+
+  final String chatId;
+
+  final _i11.Key? key;
+
+  @override
+  String toString() {
+    return 'ChatDetailsViewArgs{chatId: $chatId, key: $key}';
+  }
 }
 
 extension RouterStateExtension on _i9.RouterService {
@@ -324,10 +384,16 @@ extension RouterStateExtension on _i9.RouterService {
     );
   }
 
-  Future<dynamic> navigateToMailDetailsView(
-      {void Function(_i10.NavigationFailure)? onFailure}) async {
+  Future<dynamic> navigateToMailDetailsView({
+    required String mailId,
+    _i11.Key? key,
+    void Function(_i10.NavigationFailure)? onFailure,
+  }) async {
     return navigateTo(
-      const MailDetailsViewRoute(),
+      MailDetailsViewRoute(
+        mailId: mailId,
+        key: key,
+      ),
       onFailure: onFailure,
     );
   }
@@ -340,10 +406,16 @@ extension RouterStateExtension on _i9.RouterService {
     );
   }
 
-  Future<dynamic> navigateToChatDetailsView(
-      {void Function(_i10.NavigationFailure)? onFailure}) async {
+  Future<dynamic> navigateToChatDetailsView({
+    required String chatId,
+    _i11.Key? key,
+    void Function(_i10.NavigationFailure)? onFailure,
+  }) async {
     return navigateTo(
-      const ChatDetailsViewRoute(),
+      ChatDetailsViewRoute(
+        chatId: chatId,
+        key: key,
+      ),
       onFailure: onFailure,
     );
   }
@@ -396,10 +468,16 @@ extension RouterStateExtension on _i9.RouterService {
     );
   }
 
-  Future<dynamic> replaceWithMailDetailsView(
-      {void Function(_i10.NavigationFailure)? onFailure}) async {
+  Future<dynamic> replaceWithMailDetailsView({
+    required String mailId,
+    _i11.Key? key,
+    void Function(_i10.NavigationFailure)? onFailure,
+  }) async {
     return replaceWith(
-      const MailDetailsViewRoute(),
+      MailDetailsViewRoute(
+        mailId: mailId,
+        key: key,
+      ),
       onFailure: onFailure,
     );
   }
@@ -412,10 +490,16 @@ extension RouterStateExtension on _i9.RouterService {
     );
   }
 
-  Future<dynamic> replaceWithChatDetailsView(
-      {void Function(_i10.NavigationFailure)? onFailure}) async {
+  Future<dynamic> replaceWithChatDetailsView({
+    required String chatId,
+    _i11.Key? key,
+    void Function(_i10.NavigationFailure)? onFailure,
+  }) async {
     return replaceWith(
-      const ChatDetailsViewRoute(),
+      ChatDetailsViewRoute(
+        chatId: chatId,
+        key: key,
+      ),
       onFailure: onFailure,
     );
   }

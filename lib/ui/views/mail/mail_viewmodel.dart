@@ -8,6 +8,6 @@ class MailViewModel extends BaseViewModel {
   final routerService = locator<RouterService>();
 
   void navigateToMailDetails(Mail mail) {
-    routerService.navigateTo(const MailDetailsViewRoute());
+    routerService.navigateTo(MailDetailsViewRoute(mailId: mail.id));
   }
 }
