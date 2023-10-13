@@ -11,10 +11,7 @@ class ChatViewMobile extends ViewModelWidget<ChatViewModel> {
   Widget build(BuildContext context, ChatViewModel viewModel) {
     return const Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.0),
-          child: ChatListView(),
-        ),
+        child: ChatListView(),
       ),
     );
   }

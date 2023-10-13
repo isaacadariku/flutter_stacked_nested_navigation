@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stacked_nested_navigation/ui/views/mail/components/mail_list_view.dart';
 import 'package:stacked/stacked.dart';
 
 import 'mail_viewmodel.dart';
@@ -9,14 +10,8 @@ class MailViewTablet extends ViewModelWidget<MailViewModel> {
   @override
   Widget build(BuildContext context, MailViewModel viewModel) {
     return const Scaffold(
-      body: Center(
-        child: Text(
-          'Hello, TABLET UI!',
-          style: TextStyle(
-            fontSize: 35,
-            fontWeight: FontWeight.w900,
-          ),
-        ),
+      body: SafeArea(
+        child: MailListView(),
       ),
     );
   }

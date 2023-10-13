@@ -8,23 +8,26 @@ class ChatListView extends ViewModelWidget<ChatViewModel> {
 
   @override
   Widget build(BuildContext context, ChatViewModel viewModel) {
-    return ListView.builder(
-      itemCount: demoChats.length,
-      itemBuilder: (context, index) {
-        final chat = demoChats[index];
-        return ListTile(
-          onTap: () => viewModel.navigateToChatDetails(chat),
-          leading: CircleAvatar(
-            radius: 25,
-            child: Text(chat.title[0] + chat.title[1]),
-          ),
-          title: Text(chat.title),
-          subtitle: Text(chat.lastMessage),
-          trailing: Text(
-            "${chat.lastMessageTime.day}/${chat.lastMessageTime.month}/${chat.lastMessageTime.year}",
-          ),
-        );
-      },
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: ListView.builder(
+        itemCount: demoChats.length,
+        itemBuilder: (context, index) {
+          final chat = demoChats[index];
+          return ListTile(
+            onTap: () => viewModel.navigateToChatDetails(chat),
+            leading: CircleAvatar(
+              radius: 25,
+              child: Text(chat.title[0] + chat.title[1]),
+            ),
+            title: Text(chat.title),
+            subtitle: Text(chat.lastMessage),
+            trailing: Text(
+              "${chat.lastMessageTime.day}/${chat.lastMessageTime.month}/${chat.lastMessageTime.year}",
+            ),
+          );
+        },
+      ),
     );
   }
 }
